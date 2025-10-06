@@ -1,0 +1,60 @@
+@use "./ui/sass/variables" as common;
+
+@font-face {
+    font-family: common.$font-family;
+    src: url(./ui/fonts/400.woff2) format('woff2'), url(./ui/fonts/400.woff) format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: common.$font-family;
+    src: url(./ui/fonts/700.woff2) format('woff2'), url(./ui/fonts/700.woff) format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+svg {
+    box-sizing: border-box !important;
+}
+
+body {
+    font: 400 #{common.$font-size}/1.5 common.$font-family, monospace;
+    color: common.$color-text;
+    background-color: common.$color-background;
+    overflow: hidden;
+    user-select: none;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    display: block;
+    margin: 0 0 common.$unit;
+    user-select: text;
+}
+
+p {
+    display: block;
+    margin: 0 0 common.$unit;
+    user-select: text;
+}
+
+button, input, textarea, select {
+    @include common.with-font;
+
+    font-size: common.$font-size;
+}

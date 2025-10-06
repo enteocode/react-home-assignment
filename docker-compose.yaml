@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+    frontend:
+        container_name: rl.frontend
+        image: node:lts-alpine3.22
+        working_dir: /var/www/html
+        command: sh ./config/docker/dev-server.sh
+        ports:
+            - "8080:8080"
+        environment:
+            NODE_ENV: development
+        volumes:
+            - .:/var/www/html
+            - node_frontend:/var/www/html/node_modules:cached
+        networks:
+            - rl
+
+volumes:
+    node_frontend:
+
+networks:
+    rl:

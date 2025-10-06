@@ -1,0 +1,36 @@
+{
+    "plugins": [
+        [
+            "@babel/plugin-transform-runtime",
+            {
+                "helpers": false,
+                "useESModules": true
+            }
+        ],
+        [
+            "react-compiler"
+        ]
+    ],
+    "presets": [
+        [
+            "@babel/preset-typescript"
+        ],
+        [
+            "@babel/preset-env",
+            {
+                "useBuiltIns": "usage",
+                "loose": true,
+                "corejs": 3,
+                "modules": false,
+                "shippedProposals": true
+            }
+        ],
+        [
+            "@babel/preset-react",
+            {
+                "runtime": "automatic"
+            }
+        ]
+    ],
+    "comments": false
+}

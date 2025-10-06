@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "esModuleInterop": true,
+        "noEmit": true,
+        "module": "ESNext",
+        "target": "ES2024",
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "baseUrl": "./",
+        "preserveConstEnums": true,
+        "allowJs": true,
+        "alwaysStrict": true,
+        "isolatedModules": true,
+        "lib": ["dom"],
+        "jsx": "react",
+        "types": ["node", "jest"]
+    },
+    "include": [
+        "src/types/Globals.d.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

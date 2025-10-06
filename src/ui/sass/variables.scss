@@ -1,0 +1,43 @@
+@use "sass:color";
+
+$unit: 12px;
+
+$font-size: 14px;
+$font-family: "Jetbrains Mono";
+
+$size-radius: 5px;
+
+$color-background: #0f172a;
+$color-text: #f8fafc;
+$color-text-secondary: #94a3b8;
+$color-text-header: #fff;
+$color-border: #334155;
+$color-gray: #d1d5db;
+$color-neutral: #30363D;
+$color-blue: #2f81f7;
+$color-red: #bc4b51;
+$color-green: #957437;
+$color-orange: #e47b00;
+
+// Media Breakpoints
+
+$media-xs: 600px;
+$media-sm: 768px;
+$media-md: 992px;
+$media-lg: 1200px;
+
+// Shadows
+
+$shadow-xs: 0 1px 3px -1px rgba(#000, .2);
+
+// Mixins
+
+@mixin with-outline($background, $opacity: 0.4) {
+    &:focus {
+        outline: 3px solid rgba($background, $opacity);
+    }
+}
+
+@mixin with-font {
+    font-family: $font-family, monospace;
+}
