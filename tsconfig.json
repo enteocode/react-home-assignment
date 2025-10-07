@@ -17,7 +17,7 @@
         "types": ["node", "jest"]
     },
     "include": [
-        "src/types/Globals.d.ts"
+        "src/types/globals.d.ts"
     ],
     "exclude": [
         "node_modules",

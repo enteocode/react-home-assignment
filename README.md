@@ -4,7 +4,8 @@
 
 ## Requirements
 
-- **Node.js LTS** (version **22.x**)
+- **Node.js LTS** (version **22.x**) for development
+- **Docker** to run dev-server
 
 ## Instructions
 
@@ -35,6 +36,7 @@ docker-compose up
 ```
 
 This will launch the development container with all necessary dependencies.
+The server will be listening on [http://localhost:8080][D].
 
 ## Production
 
@@ -46,3 +48,12 @@ npm run build
 ```
 
 The optimized, ready-to-deploy files will be generated in the `dist` directory.
+
+**Important!**
+
+In production, the use of **HTTPS** is essential to work with the [File API][F] needed
+to read local files for digest calculations.
+
+
+[D]: http://localhost:8080
+[F]: https://developer.mozilla.org/en-US/docs/Web/API/File_API

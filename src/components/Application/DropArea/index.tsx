@@ -3,49 +3,74 @@ import React, {
     DragEventHandler,
     FunctionComponent,
     MouseEventHandler,
+    useEffect,
     useRef,
     useState
 } from 'react';
 import Button from '../../Button';
 import Image, { Source } from '../../Image';
-import Progress from '../../Progress';
+import Progress, { Props as ProgressProps } from '../../Progress';
 import classNames from 'classnames';
+import { useDigestCalculator } from '../../../lib/digest';
 
 import * as style from './style.scss';
 
-export type Props = {
-    className?: string;
-    onError?: ErrorHandler;
-};
+import type { Progress as ProgressType } from '../../../lib/digest/progress.type';
 
 export type ErrorHandler = (message: string) => void;
 
-export type FileDetails = Partial<{
-    name: string;
-    size: number
-    hash: string;
-    error: string
-}>;
+export type ProgressHandler = (progress: ProgressType) => void;
 
-const DropArea: FunctionComponent<Props> = ({ className, onError }) => {
+export type Props = {
+    className?: string;
+    onProgress: ProgressHandler;
+    onError: ErrorHandler;
+};
+
+/**
+ * Translates the progress message to properties for Progress component
+ *
+ * @private
+ * @param progress
+ */
+const getProgress = (progress: ProgressType | null): Pick<ProgressProps, 'total' | 'value'> => {
+    if (!progress) {
+        return {};
+    }
+    const { size, processed } = progress;
+
+    if (size === processed) {
+        return {};
+    }
+    return { total: size, value: processed };
+};
+
+const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) => {
     const ref = useRef<HTMLInputElement>(null);
 
+    const [calculate, progress, abort] = useDigestCalculator();
     const [drag, setDrag] = useState(false);
+    const [disabled, setDisabled] = useState<boolean>(false);
 
     const handleFileSelectionClick: MouseEventHandler<HTMLElement> = (e) => {
-        if (ref.current) {
-            ref.current.click();
+        if (!ref.current) {
+            return;
         }
+        ref.current.click();
     };
 
-    const handleFileSelection: ChangeEventHandler<HTMLInputElement> = (e) => {
-        console.log(e.target.files);
+    const handleFileSelection: ChangeEventHandler<HTMLInputElement> = ({ target: { files } }) => {
+        if (!files || files.length === 0) {
+            return;
+        }
+        calculate(files[0]);
+        setDisabled(true);
     };
 
     const handleDragOver: DragEventHandler<HTMLInputElement> = (e) => {
         e.preventDefault();
 
-        if (drag) {
+        if (drag || disabled) {
             return;
         }
         setDrag(true);
@@ -62,19 +87,49 @@ const DropArea: FunctionComponent<Props> = ({ className, onError }) => {
     const handleDrop: DragEventHandler<HTMLInputElement> = (e): void => {
         e.preventDefault();
 
-        const { files } = e.dataTransfer;
-
-        console.log(files);
-        if (!onError) {
+        if (disabled) {
             return;
         }
+        const { files } = e.dataTransfer;
+
         if (!files || files.length === 0) {
             onError('Use files only');
         }
         if (files.length > 1) {
             onError('Use single file only');
         }
+        calculate(files[0]);
     };
+
+    // ATTENTION
+    //
+    // The handlers must have a consistent reference between
+    // different renders to avoid infinite loop
+
+    useEffect(() => {
+        if (!progress) {
+            return;
+        }
+        if (progress.error) {
+            setDisabled(false);
+            return void onError(progress.error);
+        }
+        if (progress.hash) {
+            setDisabled(false);
+        }
+        onProgress(progress);
+    }, [
+        progress,
+        onError,
+        onProgress
+    ]);
+
+    // IMPORTANT
+    //
+    // Abort is immutable between rendering and must be triggered on unmount
+    // to avoid memory leaks
+
+    useEffect(() => abort, [abort]);
 
     return (
         <div
@@ -88,20 +143,18 @@ const DropArea: FunctionComponent<Props> = ({ className, onError }) => {
             <div className={style.wrapper}>
                 <Image className={style.icon} src={Source.FILE as unknown as string} width={96} height={96} />
 
-                <h1 className={style.title}>SHA-256 Digest Calculator</h1>
+                <h1 className={style.title}>
+                    SHA-256 Digest Calculator
+                </h1>
+                <Progress className={style.progress} {...getProgress(progress)} />
 
-                <Progress
-                    className={style.progress}
-                    total={100}
-                    value={25}
-                />
                 <p className={style.description}>
                     Click the button or drop a file to the blue area to calculate its SHA-256 hash.
                 </p>
             </div>
 
             <div className={style.actions}>
-                <Button className={style.button} onClick={handleFileSelectionClick}>
+                <Button className={style.button} disabled={disabled} onClick={handleFileSelectionClick}>
                     Select file
                 </Button>
             </div>

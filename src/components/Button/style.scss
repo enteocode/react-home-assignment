@@ -16,18 +16,21 @@
     cursor: pointer;
     transition: background-color 150ms;
     will-change: background-color;
-}
 
-.button:hover, .button:focus {
-    background-color: color.adjust(common.$color-green, $lightness: -5%);
-}
+    &:hover, &:focus {
+        background-color: color.adjust(common.$color-green, $lightness: -5%);
+    }
 
-.button:active {
-    background-color: color.adjust(common.$color-green, $lightness: -10%);
-    transition: none;
+    &:active {
+        background-color: color.adjust(common.$color-green, $lightness: -10%);
+        transition: none;
+    }
 }
 
 .disabled {
-    background: color.grayscale(common.$color-green);
-    pointer-events: none;
+    &, &:hover, &:focus, &:active {
+        background: color.grayscale(common.$color-green);
+        cursor: default;
+        pointer-events: none;
+    }
 }

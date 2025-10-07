@@ -1,5 +1,5 @@
-import React, { ChangeEventHandler, Fragment, FunctionComponent, MouseEventHandler, useState } from 'react';
-import DropArea , { ErrorHandler, FileDetails } from './DropArea';
+import React, { ChangeEventHandler, Fragment, FunctionComponent, MouseEventHandler, useCallback, useState } from 'react';
+import DropArea, { ErrorHandler, ProgressHandler } from './DropArea';
 import Text from '../Text';
 import Toast, { Action } from '../Toast';
 import Details from './Details';
@@ -9,9 +9,11 @@ import { Source } from '../Icon';
 
 import * as style from './style.scss';
 
+import type { Progress } from '../../lib/digest/progress.type';
+
 const Application: FunctionComponent = () => {
     const [description, setDescription] = useState<string>('');
-    const [file, setFile] = useState<FileDetails | null>(null);
+    const [file, setFile] = useState<Partial<Progress> | null>(null);
     const [copied, setCopied] = useState<boolean>(false);
 
     const handleDescriptionChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
@@ -21,12 +23,24 @@ const Application: FunctionComponent = () => {
         setDescription(e.target.value);
     };
 
-    const handleError: ErrorHandler = (message: string) => {
-        const next: Pick<FileDetails, 'error'> = {
+    const handleError: ErrorHandler = useCallback<ErrorHandler>((message: string) => {
+        const next: Pick<Progress, 'error'> = {
             error: message
         };
-        setFile(file ? { ...file, ... next } : next)
-    }
+        setFile((file) => {
+            if (file) {
+                return { ...file, ... next };
+            }
+            return next;
+        });
+    }, []);
+
+    const handleProgress = useCallback<ProgressHandler>((progress: Progress) => {
+        if (progress.size !== progress.processed) {
+            return;
+        }
+        setFile(progress);
+    }, [])
 
     const handleCopyToClipboard: MouseEventHandler<HTMLElement> = (): void => {
         if (!file || !file.hash) {
@@ -71,7 +85,7 @@ const Application: FunctionComponent = () => {
             )}
 
             <div className={style.layout}>
-                <DropArea className={style.drop} onError={handleError} />
+                <DropArea className={style.drop} onError={handleError} onProgress={handleProgress} />
 
                 <div className={style.text}>
                     <Text
