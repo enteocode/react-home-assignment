@@ -2,7 +2,7 @@
 
 # ReversingLabs Home Assignment
 
-[![Build Status](https://github.com/enteocode/reversing-labs/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/enteocode/reversing-labs/actions/workflows/ci.yml)
+[![Build Status](https://github.com/enteocode/reversing-labs/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/enteocode/reversing-labs/actions/workflows/ci.yml)
 
 ## Requirements
 
