@@ -51,6 +51,7 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
 
     const [calculate, progress] = useDigestCalculator();
     const [drag, setDrag] = useState(false);
+    const [file, setFile] = useState('');
     const [disabled, setDisabled] = useState<boolean>(false);
 
     const handleFileSelectionClick: MouseEventHandler<HTMLElement> = (e) => {
@@ -60,11 +61,18 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
         ref.current.click();
     };
 
-    const handleFileSelection: ChangeEventHandler<HTMLInputElement> = ({ target: { files } }) => {
+    const handleFileSelection: ChangeEventHandler<HTMLInputElement> = ({ target: { files, value } }) => {
+        // IMPORTANT
+        //
+        // We have to control the value of the file input as well, otherwise we
+        // couldn't reset on success and selecting the same file again won't
+        // trigger the change event
+
         if (!files || files.length === 0) {
             return;
         }
         calculate(files[0]);
+        setFile(value);
         setDisabled(true);
     };
 
@@ -117,6 +125,7 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
         }
         if (progress.hash) {
             setDisabled(false);
+            setFile('');
         }
         onProgress(progress);
     }, [
@@ -132,7 +141,13 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
         >
-            <input ref={ref} className={style.input} type="file" onChange={handleFileSelection} />
+            <input
+                ref={ref}
+                className={style.input}
+                type="file"
+                value={file}
+                onChange={handleFileSelection}
+            />
 
             <div className={style.wrapper}>
                 <Image className={style.icon} src={Source.FILE as unknown as string} width={96} height={96} />
