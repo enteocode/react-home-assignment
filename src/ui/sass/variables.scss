@@ -1,23 +1,21 @@
 @use "sass:color";
 
-$unit: 12px;
+$unit: 10px;
 
 $font-size: 14px;
 $font-family: "Jetbrains Mono";
 
 $size-radius: 5px;
 
-$color-background: #0f172a;
-$color-text: #f8fafc;
-$color-text-secondary: #94a3b8;
-$color-text-header: #fff;
-$color-border: #334155;
-$color-gray: #d1d5db;
-$color-neutral: #30363D;
+$color-background: #fff;
+$color-background-dark: #041e39;
+$color-text: #000101;
+$color-text-secondary: #939393;
+$color-text-light: #fff;
+$color-gray: #f4f4f4;
 $color-blue: #2f81f7;
 $color-red: #bc4b51;
-$color-green: #957437;
-$color-orange: #e47b00;
+$color-green: #89b82d;
 
 // Media Breakpoints
 

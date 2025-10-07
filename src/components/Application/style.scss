@@ -1,0 +1,19 @@
+@use "../../ui/sass/variables" as common;
+
+.layout {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+}
+
+.drop {
+    flex: 1;
+}
+
+.text {
+    flex: 0;
+    padding: 2 * common.$unit;
+    width: 640px;
+    max-width: 100%;
+    margin: 0 auto;
+}

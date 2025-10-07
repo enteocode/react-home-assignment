@@ -23,6 +23,7 @@ html, body {
 
 html {
     box-sizing: border-box;
+    height: 100%;
 }
 
 svg {
@@ -35,6 +36,10 @@ body {
     background-color: common.$color-background;
     overflow: hidden;
     user-select: none;
+}
+
+body, :global(#root) {
+    min-height: 100dvh;
 }
 
 *, *::before, *::after {

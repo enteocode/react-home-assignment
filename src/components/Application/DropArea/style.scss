@@ -1,0 +1,63 @@
+@use "../../../ui/sass/variables" as common;
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4 * common.$unit;
+    text-align: center;
+    color: common.$color-text-light;
+    background: common.$color-background-dark;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    margin: 0 auto;
+    padding: (2 * common.$unit) (2 * common.$unit) (4 * common.$unit);
+    width: 520px;
+    pointer-events: none;
+}
+
+.input {
+    display: none;
+}
+
+.drag .icon {
+    transform: scale(1.25);
+}
+
+.title {
+    font-size: 2em;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 1em 0;
+}
+
+.description {
+    color: common.$color-text-secondary;
+}
+
+.progress {
+    margin-bottom: 3 * common.$unit;
+}
+
+.actions {
+    flex: 0;
+    margin-bottom: -3 * common.$unit;
+    pointer-events: none;
+}
+
+.button {
+    position: relative;
+    z-index: 2;
+    pointer-events: all;
+}
+
+.icon {
+    margin: auto;
+    transition: transform 300ms cubic-bezier(0, 0.75, 0, 1);
+    pointer-events: none;
+}

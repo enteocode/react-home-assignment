@@ -1,0 +1,26 @@
+@use "../../../ui/sass/variables" as common;
+
+.list {
+    display: block;
+}
+
+.term {
+    display: block;
+    margin: 2 * common.$unit 0 0;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.description {
+    display: block;
+    margin: 0;
+    color: common.$color-text-secondary;
+}
+
+.hash {
+    color: common.$color-green;
+}
+
+.error {
+    color: common.$color-blue;
+}

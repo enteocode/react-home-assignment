@@ -18,6 +18,7 @@ import CopyPlugin from 'copy-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import DotenvPlugin from 'dotenv-webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 import { resolve } from 'path';
 
@@ -70,7 +71,7 @@ const createConfig = (): Configuration => {
             app: getFiltered([isProduction ? '' : 'react-refresh/runtime', './src/bootstrap.tsx'])
         },
         output: {
-            filename: 'static/[name].js?v=[chunkhash:8]',
+            filename: 'static/[name].[contenthash:6].js',
             path: resolve('dist'),
             publicPath: '/'
         },
@@ -116,14 +117,15 @@ const createConfig = (): Configuration => {
         },
         plugins: getFiltered([
             !isProduction ? new ReactRefreshPlugin() : new MiniCssExtractPlugin({
-                filename: 'static/[name].css?v=[chunkhash:8]'
+                filename: 'static/[name].[contenthash:6].css'
             }),
-
             isProduction && new CopyPlugin({
                 patterns: [
                     { from: './src/ui/static', to: '' }
                 ]
             }),
+
+            new CleanWebpackPlugin(),
             new DotenvPlugin({
                 path: './.env'
             }),
@@ -134,7 +136,7 @@ const createConfig = (): Configuration => {
                 inject: 'body',
                 minify: true,
                 templateParameters: {
-                    title: 'SHA256 File Hash Generator | Reversing Labs',
+                    title: 'SHA-256 Digest Calculator | Reversing Labs',
                     lang: 'en'
                 },
                 scriptLoading: 'defer'
@@ -197,14 +199,14 @@ const createConfig = (): Configuration => {
                     test: /\.(jpe?g|png|gif|svg|webp)$/,
                     type: 'asset/resource',
                     generator: {
-                        filename: 'static/image/[name][ext]?v=[chunkhash:8]'
+                        filename: 'static/image/[name].[contenthash:6][ext]'
                     }
                 },
                 {
                     test: /\.(ttf|woff2?)$/,
                     type: 'asset/resource',
                     generator: {
-                        filename: 'static/font/[name][ext]?v=[hash:8]'
+                        filename: 'static/font/[name].[contenthash:6][ext]'
                     }
                 }
             ]
