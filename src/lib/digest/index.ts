@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Handler } from './handler';
 
 import type { MessageSender } from './handler';
@@ -11,10 +11,10 @@ import type { Progress } from './progress.type';
  */
 export const useDigestCalculator = (): [MessageSender, Progress | null] => {
     const [progress, setProgress] = useState<Progress | null>(null);
-    const handler = useRef(new Handler(setProgress));
+    const [handler] = useState(new Handler(setProgress));
 
     return [
-        handler.current.calculate,
+        handler.calculate,
         progress
     ];
 };

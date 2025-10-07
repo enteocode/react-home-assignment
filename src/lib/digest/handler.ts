@@ -16,7 +16,7 @@ export class Handler {
     private readonly worker: Worker;
 
     public constructor(set: MessageSetter) {
-        const worker = new Worker(/* webpackChunkName: "digest.worker" */ new URL('./worker.ts', import.meta.url));
+        const worker = new Worker(/* webpackChunkName: "worker" */ new URL('./worker.ts', import.meta.url));
 
         worker.addEventListener('message', (event: MessageEvent<Progress>) => {
             set(event.data);
