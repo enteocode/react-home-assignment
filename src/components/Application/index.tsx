@@ -92,6 +92,7 @@ const Application: FunctionComponent = () => {
                         value={description}
                         maxLength={500}
                         onChange={handleDescriptionChange}
+                        autoFocus={true}
                         placeholder="Description"
                     />
                 </div>
