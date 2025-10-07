@@ -1,6 +1,6 @@
 {
     "name": "@enteocode/reversing-labs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "private": true,
     "description": "Non-blocking SHA256 file hash generator application",
     "scripts": {
