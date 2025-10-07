@@ -3,6 +3,7 @@ import React, {
     DragEventHandler,
     FunctionComponent,
     MouseEventHandler,
+    memo,
     useEffect,
     useRef,
     useState
@@ -48,7 +49,7 @@ const getProgress = (progress: ProgressType | null): Pick<ProgressProps, 'total'
 const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) => {
     const ref = useRef<HTMLInputElement>(null);
 
-    const [calculate, progress, abort] = useDigestCalculator();
+    const [calculate, progress] = useDigestCalculator();
     const [drag, setDrag] = useState(false);
     const [disabled, setDisabled] = useState<boolean>(false);
 
@@ -124,13 +125,6 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
         onProgress
     ]);
 
-    // IMPORTANT
-    //
-    // Abort is immutable between rendering and must be triggered on unmount
-    // to avoid memory leaks
-
-    useEffect(() => abort, [abort]);
-
     return (
         <div
             className={classNames(style.container, drag && style.drag, className)}
@@ -162,4 +156,4 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
     );
 };
 
-export default DropArea;
+export default memo(DropArea);
