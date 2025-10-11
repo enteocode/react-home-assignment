@@ -103,12 +103,20 @@ const createConfig = (): Configuration => {
                 })
             ],
             splitChunks: {
+                chunks: 'all',
                 cacheGroups: {
-                    name: false,
-                    vendor: {
-                        test: /node_modules/,
-                        name: 'vendor',
-                        chunks: 'all'
+                    reactVendor: {
+                        test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+                        name: 'react',
+                        chunks: 'all',
+                        priority: 20,
+                        enforce: true
+                    },
+                    defaultVendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all',
+                        priority: -10,
                     }
                 }
             }
@@ -128,7 +136,7 @@ const createConfig = (): Configuration => {
 
             new CleanWebpackPlugin(),
             new DefinePlugin({
-                'process.env.NODE_ENV': process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : 'development',
+                'process.env.NODE_ENV': process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : 'development'
             }),
             new DotenvPlugin({
                 path: './.env'

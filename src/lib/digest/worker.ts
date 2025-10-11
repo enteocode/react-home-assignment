@@ -1,5 +1,6 @@
-import { sha256, Hasher } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 
+import type { Hasher } from 'js-sha256';
 import type { Progress } from './progress.type';
 
 /**
