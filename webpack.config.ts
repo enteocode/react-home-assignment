@@ -18,6 +18,7 @@ import CopyPlugin from 'copy-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import DotenvPlugin from 'dotenv-webpack';
 import ReactRefreshPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import { DefinePlugin } from 'webpack';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 import { resolve } from 'path';
@@ -64,7 +65,6 @@ const createConfig = (): Configuration => {
         mode: isProduction ? 'production' : 'development',
         devtool: isProduction ? void 0 : 'inline-source-map',
         stats: {
-            children: false,
             warnings: false
         },
         entry: {
@@ -73,6 +73,7 @@ const createConfig = (): Configuration => {
         output: {
             filename: 'static/[name].[contenthash:6].js',
             path: resolve('dist'),
+            iife: true,
             publicPath: '/'
         },
         devServer: {
@@ -126,6 +127,9 @@ const createConfig = (): Configuration => {
             }),
 
             new CleanWebpackPlugin(),
+            new DefinePlugin({
+                'process.env.NODE_ENV': process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : 'development',
+            }),
             new DotenvPlugin({
                 path: './.env'
             }),
