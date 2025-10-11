@@ -19,7 +19,7 @@
     "dependencies": {
         "@babel/runtime": "^7.28.4",
         "classnames": "^2.5.1",
-        "core-js": "^3.45.1",
+        "core-js": "^3.46.0",
         "js-sha256": "^0.11.1",
         "react": "^19.2.0",
         "react-dom": "^19.2.0"
@@ -44,7 +44,7 @@
         "@types/react-dom": "^19.2.1",
         "autoprefixer": "^10.4.21",
         "babel-loader": "^10.0.0",
-        "babel-plugin-react-compiler": "^19.1.0-rc.3",
+        "babel-plugin-react-compiler": "^1.0.0",
         "clean-webpack-plugin": "^4.0.0",
         "copy-webpack-plugin": "^13.0.1",
         "cross-env": "^10.1.0",
@@ -54,14 +54,14 @@
         "eslint": "^9.37.0",
         "eslint-config-prettier": "^10.1.8",
         "eslint-plugin-react": "^7.37.5",
-        "eslint-plugin-react-hooks": "^6.1.1",
+        "eslint-plugin-react-hooks": "^7.0.0",
         "eslint-webpack-plugin": "^5.0.2",
         "handlebars-loader": "^1.7.3",
         "html-webpack-plugin": "^5.6.4",
         "husky": "^9.1.7",
         "identity-obj-proxy": "^3.0.0",
         "jest": "^30.2.0",
-        "lint-staged": "^16.2.3",
+        "lint-staged": "^16.2.4",
         "mini-css-extract-plugin": "^2.9.4",
         "postcss-loader": "^8.2.0",
         "prettier": "^3.6.2",
@@ -73,7 +73,7 @@
         "terser-webpack-plugin": "^5.3.14",
         "typescript": "^5.9.3",
         "typescript-eslint": "^8.46.0",
-        "webpack": "^5.102.0",
+        "webpack": "^5.102.1",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^5.2.2"
     }
