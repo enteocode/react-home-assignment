@@ -1,8 +1,9 @@
 {
-    "name": "@enteocode/reversing-labs",
+    "name": "@enteocode/react-home-assignment",
     "version": "1.0.3",
     "private": true,
-    "description": "Non-blocking SHA256 file hash generator application",
+    "description": "Non-blocking SHA256 file hash calculator application",
+    "license": "MIT",
     "scripts": {
         "build": "cross-env NODE_ENV=production webpack --mode production",
         "start": "webpack-dev-server",
