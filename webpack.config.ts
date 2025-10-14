@@ -56,6 +56,17 @@ const getFiltered = <T>(list: T[]): T[] => {
 }
 
 /**
+ * Returns the appropriate environment needed for React to decide
+ * to include dev tools or not
+ *
+ * @private
+ * @param isProduction
+ */
+const getEnvironment = (isProduction: boolean): string => {
+    return isProduction ? 'production' : process.env.NODE_ENV || 'development';
+}
+
+/**
  * Configuration Factory
  */
 const createConfig = (): Configuration => {
@@ -136,7 +147,7 @@ const createConfig = (): Configuration => {
 
             new CleanWebpackPlugin(),
             new DefinePlugin({
-                'process.env.NODE_ENV': process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : 'development'
+                'process.env.NODE_ENV': JSON.stringify(getEnvironment(isProduction))
             }),
             new DotenvPlugin({
                 path: './.env'
