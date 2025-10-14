@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.5](https://github.com/enteocode/reversing-labs/compare/v1.0.3...v1.0.5) (2025-10-14)
+
+
+### Bug Fixes
+
+* **ci:** fixed `NODE_ENV` replacement ([de22c88](https://github.com/enteocode/reversing-labs/commit/de22c88c1362d0d563f2d86010c53faa3efe6d99))
+* **digest:** fixed termination on unmount ([f0d2198](https://github.com/enteocode/reversing-labs/commit/f0d2198f5bca5f9634e38381f3e2c18e1faf1665))
+* **DropArea:** removed previous file details on new process start ([8e3c7c2](https://github.com/enteocode/reversing-labs/commit/8e3c7c262a4212fdd335d692552bc3ce17ff7aa0))
+
+
+### Setup
+
+* removed branding and added permissive license ([331c89a](https://github.com/enteocode/reversing-labs/commit/331c89a40089d7ab7c6675c4b60dd84f28e8a3b1))
+* updated dependencies ([fb4ab52](https://github.com/enteocode/reversing-labs/commit/fb4ab52b5e9f6cb21e023ff653fcfd42144acb5e))
+
 ### [1.0.3](https://github.com/enteocode/reversing-labs/compare/v1.0.2...v1.0.3) (2025-10-11)
 
 
