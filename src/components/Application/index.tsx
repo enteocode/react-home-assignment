@@ -1,5 +1,12 @@
-import React, { ChangeEventHandler, Fragment, FunctionComponent, MouseEventHandler, useCallback, useState } from 'react';
-import DropArea, { ErrorHandler, ProgressHandler } from './DropArea';
+import React, {
+    ChangeEventHandler,
+    Fragment,
+    FunctionComponent,
+    MouseEventHandler,
+    useCallback,
+    useState
+} from 'react';
+import DropArea, { ErrorHandler, ProgressHandler, ProgressStartHandler } from './DropArea';
 import Text from '../Text';
 import Toast, { Action } from '../Toast';
 import Details from './Details';
@@ -29,18 +36,25 @@ const Application: FunctionComponent = () => {
         };
         setFile((file) => {
             if (file) {
-                return { ...file, ... next };
+                return { ...file, ...next };
             }
             return next;
         });
     }, []);
+
+    const handleStart: ProgressStartHandler = () => {
+        if (!file) {
+            return;
+        }
+        setFile(null);
+    };
 
     const handleProgress = useCallback<ProgressHandler>((progress: Progress) => {
         if (progress.size !== progress.processed) {
             return;
         }
         setFile(progress);
-    }, [])
+    }, []);
 
     const handleCopyToClipboard: MouseEventHandler<HTMLElement> = (): void => {
         if (!file || !file.hash) {
@@ -61,7 +75,7 @@ const Application: FunctionComponent = () => {
 
     return (
         <Fragment>
-            {(file && (file.hash || file.error)) && (
+            {file && (file.hash || file.error) && (
                 <Toast
                     actions={getFiltered<Action>([
                         file.hash && {
@@ -74,18 +88,17 @@ const Application: FunctionComponent = () => {
                         }
                     ])}
                 >
-                    <Details
-                        error={file.error}
-                        file={file.name}
-                        hash={file.hash}
-                        size={file.size}
-                        text={description}
-                    />
+                    <Details error={file.error} file={file.name} hash={file.hash} size={file.size} text={description} />
                 </Toast>
             )}
 
             <div className={style.layout}>
-                <DropArea className={style.drop} onError={handleError} onProgress={handleProgress} />
+                <DropArea
+                    className={style.drop}
+                    onError={handleError}
+                    onStart={handleStart}
+                    onProgress={handleProgress}
+                />
 
                 <div className={style.text}>
                     <Text

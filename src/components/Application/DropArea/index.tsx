@@ -20,10 +20,13 @@ import type { Progress as ProgressType } from '../../../lib/digest/progress.type
 
 export type ErrorHandler = (message: string) => void;
 
+export type ProgressStartHandler = () => void;
+
 export type ProgressHandler = (progress: ProgressType) => void;
 
 export type Props = {
     className?: string;
+    onStart?: ProgressStartHandler;
     onProgress: ProgressHandler;
     onError: ErrorHandler;
 };
@@ -46,7 +49,7 @@ const getProgress = (progress: ProgressType | null): Pick<ProgressProps, 'total'
     return { total: size, value: processed };
 };
 
-const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) => {
+const DropArea: FunctionComponent<Props> = ({ className, onError, onStart, onProgress }) => {
     const ref = useRef<HTMLInputElement>(null);
 
     const [calculate, progress] = useDigestCalculator();
@@ -98,6 +101,9 @@ const DropArea: FunctionComponent<Props> = ({ className, onError, onProgress }) 
 
         if (disabled) {
             return;
+        }
+        if (onStart) {
+            onStart();
         }
         const { files } = e.dataTransfer;
 
