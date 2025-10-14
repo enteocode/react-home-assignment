@@ -28,4 +28,8 @@ export class Handler {
     public calculate: MessageSender = (file: File): void => {
         this.worker.postMessage(file);
     };
+
+    public abort = () => {
+        this.worker.terminate();
+    };
 }
