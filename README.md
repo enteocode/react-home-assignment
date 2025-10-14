@@ -1,7 +1,7 @@
 React Home Assignment
 =====================
 
-[![Build Status](https://github.com/enteocode/react-home-assignment-labs/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/enteocode/react-home-assignment/actions/workflows/ci.yml)
+[![Build Status](https://github.com/enteocode/react-home-assignment/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/enteocode/react-home-assignment/actions/workflows/ci.yml)
 
 This project demonstrates a responsive file hashing application built with **React**, designed to keep the UI 
 interactive even during heavy computation. It was originally done for a home assignment challenge, then extended and 
